@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+      <!-- Section tittle -->
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-8 ">
+                <h5 class="slider-header" >اخر العروض </h5>
+        </div>
+    </div>
+    <div class="row books-offer">
+       <div class="books-container">
+            
+            
+            
+            <div class="swiper-wrapper">
+                
+                
+                     @foreach($booksOffers as $offer)
+  
+                        <div class="swiper-slide col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">
+                            <div class="single-popular-items mb-50 text-right w-100">
+                                <div class="popular-img" style="height:250px;width: 165px; display:flex;align-items:flex-end;">
+                                    <a href="{{url('book/'. $offer->id)}}"><img src="{{ url('book/' . $offer->id .  '/getFeatureImage') }}" alt="" style="height:auto;"></a>
+                                    <div class="img-cap new" style="background: #aaa;">
+                                        <span>
+                                            <div class="rate">
+                                                <ul>
+                                                    <li><i class="fas fa-star"></i></li>
+                                                    <li><i class="fas fa-star"></i></li>
+                                                    <li><i class="fas fa-star"></i></li>
+                                                    <li><i class="fas fa-star"></i></li>
+                                                    <li><i class="fas fa-star"></i></li>
+                                                </ul>
+                                                
+                                            </div>
+                                           <span class="price">
+                                              
+                                               <div class="price-box d-flex">
+                                                  @if( $offer->offer == null)
+                                                   <span class="num">{{$offer->price}}</span>
+                                                   <span>جم</span>
+                                                   @else
+                                                   <span class="num" style="margin-left:10px;"><del>{{$offer->price}}</del></span>
+                                                   <span class="num">{{$offer->price - $offer->price * $offer->offer/100}}</span>
+                                                   <span>جم</span>
+                                                   @endif
+                                               </div>
+                                           </span>
+                                           
+                                            <div class="buttons remove">
+                                                <a href="{{url('cart/add/'.$offer->id)}}" class="genric-btn primary-border circle"><i class="fas fa-shopping-cart"></i>اضف الي السلة </a>
+                                                <a href="{{url('like/'.$offer->id)}}" class="genric-btn primary-border circle"><i class="fas fa-heart"></i></a>
+            
+                                            </div>
+                                        </span>
+                                        
+                                      
+                                    </div>
+                                    
+                                </div>
+                                <div class="popular-caption">
+                                       <h3><a href="{{url('book/'. $offer->id)}}">{{$offer->title}}</a></h3>
+                                        <span style="font-weight:bold;"><a href="{{url('writers/' .$offer->writer->name)}}">{{$offer->writer->name}}</a></span>
+                                        <span style="font-weight:bold;"><a href="{{url('subjects/'. $offer->category)}}">{{$offer->category}}</a></span>
+                                      
+                                        <p>{{$offer->about}}</p>
+                                        <div class="discount">
+                                      
+                                           <p><span style="font-weight:bold;">{{$offer->offer}}%</span> خصم</p> 
+
+
+                                        </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                    @endforeach    
+                       
+                
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+           
+        </div>
+       
+       
+    </div>
+    
+
+</div>
+</div>
+
+</div>
+</div>
+</section>   
+    <script>
+    
+ function fetch_customer_data(query = '')
+ {
+  $.ajax({
+   url:"{{ route('live_search.action') }}",
+   method:'GET',
+   data:{query:query, year: {{$year}}},
+   dataType:'json',
+   success:function(data)
+   {
+       console.log(data)
+      $('.books--list').empty();
+      $('.books--list').append(data.output);
+    // $('tbody').html(data.table_data);
+    // $('#total_records').text(data.total_data);
+   },
+   error: function(err) {
+      console.log(err)
+   }
+  })
+ }
+
+});
+
+ var swiper = new Swiper('.books-container', {
+      // loop:true,
+      // autoplay: {
+      //   delay: 2500,
+      //   disableOnInteraction: false,
+      // },
+         init:true,
+       observer:true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      breakpoints: {
+        100: {
+          slidesPerView: 1,
+          spaceBetween: 0,
+          slidesPerGroup: 1,
+        },
+        575: {
+          slidesPerView: 3,
+          spaceBetween: 0,
+          slidesPerGroup: 3,
+        },
+        768: {
+          slidesPerView: 4,
+          spaceBetween: 0,
+          slidesPerGroup: 4,
+        },
+        1024: {
+          slidesPerView: 6,
+          spaceBetween: 0,
+          slidesPerGroup: 6,
+        },
+      }
+     
+    });
+
+    // -------------- fix slider problem (not slide correctly in mobile)
+    const CONFIG = {
+    //   loop:true,
+    //   autoplay: {
+    //      delay: 2500,
+    //      disableOnInteraction: false,
+    //   },
+       init:true,
+       observer:true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      breakpoints: {
+        100: {
+          slidesPerView: 2,
+          spaceBetween: 0,
+          slidesPerGroup: 2,
+        },
+        575: {
+          slidesPerView: 3,
+          spaceBetween: 0,
+          slidesPerGroup: 3,
+        },
+        768: {
+          slidesPerView: 4,
+          spaceBetween: 0,
+          slidesPerGroup: 4,
+        },
+        1024: {
+          slidesPerView: 6,
+          spaceBetween: 0,
+          slidesPerGroup: 6,
+        },
+      }
+     
+    };
+
+    var swiper = new Swiper('#news-homepage-owl', CONFIG), 
+        new_releases_swiper = new Swiper('#js-new_releases_swiper', CONFIG),
+        latest_offers_swiper = new Swiper('#js-latest_offers_swiper', CONFIG),
+        latest_offers_category_page_swiper = new Swiper('#js-latest_offers_category_page_swiper', CONFIG),
+        out_library_swiper = new Swiper('#js-out_library_swiper', CONFIG),
+        other_category_1_swiper = new Swiper('#js-other_category_1_swiper', CONFIG),
+        other_category_2_swiper = new Swiper('#js-other_category_2_swiper', CONFIG),
+        similer_writters_swiper = new Swiper('#js-similer_writters_swiper', CONFIG),
+        in_library_swiper = new Swiper('#js-in_library_swiper', CONFIG);
+    
+    let homepage_main_slider_swiper = new Swiper('#js-homepage_main_slider_swiper', {
+        //   loop:true,
+          autoplay: {
+             delay: 5000,
+             disableOnInteraction: false,
+          },
+            init:true,
+            observer:true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            }
+        });
+
+
+    </script>
+</body>
+</html>
