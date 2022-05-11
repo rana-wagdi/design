@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+   <style>
+        .hideClass{
+                
+                visibility: hidden;
+            }
+            .highlight-green{
+                 background-color: green;
+            }
+            .highlight-green a.ui-state-default {
+         
+          color: red;
+           background-color: green !important;
+        }
+        </style>
+</head>
+
+<body>
+    <input class="js-datepicker-doctor-details">
+    <!-- <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script> -->
+    <script>
+    
+    var dateToday = new Date();
+$('.js-datepicker-doctor-details').datepicker({
+    beforeShowDay: checkAvailable,
+   minDate: dateToday,
+   maxDate: '50'
+});
+ var unavailableDates = ["2022-05-18", "2022-05-12","5-5-2022"];
+ var availableDates = ["2", "1","7"];
+ var resultavailableDates = availableDates.map(Number)
+
+
+function checkAvailable(date) {
+             yyyy = date.getFullYear();
+             mm = date.getMonth() + 1; 
+             dd = date.getDate();
+            
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+            
+            dmy = yyyy + '-' + mm + '-' + dd;
+        dmy = new Date(dmy).toISOString().split('T')[0];
+         /* let days = date.getDay()
+          console.log("sdsa",$.inArray(days, availableDates)) */
+          var days = new Array(7)
+           days[6] = 1;
+                    days[0] = 2;
+                    days[1] = 3;
+                    days[2] = 4;
+                    days[3] = 5;
+                    days[4] = 6;
+                    days[5] = 7;
+                    var dayResult = days[date.getDay()]
+                    console.log("dx",dayResult)
+        if ($.inArray(dmy, unavailableDates) != -1) {
+        var day = date.getDate()
+            return [false, "hideClass", "unAvailable"];
+        } else if($.inArray(dayResult, resultavailableDates) != -1){
+       
+            	return [true, "highlight-green"];
+        }else{
+            return [true]
+          }
+        
+    
+    }
+/*             var a = new Date();
+                    var days = new Array(7);
+                    days[1] = "Sunday";
+                    days[2] = "Monday";
+                    days[3] = "Tuesday";
+                    days[4] = "Wednesday";
+                    days[5] = "Thursday";
+                    days[6] = "Friday";
+                    days[7] = "Saturday";
+                    var r = days[a.getDay()]; */
+                                
+// var dateToday = new Date();
+// $('.js-datepicker-doctor-details').datepicker({
+//     beforeShowDay: checkAvailable,
+//     minDate: dateToday,
+//     maxDate: '50'
+// });
+
+// var unavailableDates = ["10-5-2022","9-5-2022","5-5-2022"];
+
+// function checkAvailable(date) {
+//     dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+//     if ($.inArray(dmy, unavailableDates) != -1) {
+//     console.log("dmy",dmy)
+//     var day = date.getDate()
+//     console.log(day)
+//         return [false, "hideClass", "unAvailable"];
+//     } else {
+        
+        
+//         return [true];
+//     }
+// }
+
+
+//   var enableDays = ['06-05-2022', '30-05-2022', '31-05-2022'];
+
+//   console.log(enableDays);
+
+//   function enableAllTheseDays(date) {
+//     var fDate = $.datepicker.formatDate('dd-mm-yy', date);
+//     var result = [true, ""];
+//     $.each(enableDays, function(k, d) {
+//       if (fDate === d) {
+          
+//           var day = date.getDate()
+//           console.log(day)
+         
+          
+//         result = [true, "highlight-green"];
+//       }
+//     });
+//     return result;
+//   }
+
+
+
+
+// $(function() {
+//   $("#datepicker-value").datepicker({
+//     beforeShowDay: function(d) {
+     
+//         var a = new Date(2022, 5, 10); 
+//         var b = new Date(2022, 5, 20); 
+//         return [true, a <= d && d <= b ? "my-class" : ""];
+   
+//     }
+//   });
+// });
+    </script>
+</body>
+</html>
